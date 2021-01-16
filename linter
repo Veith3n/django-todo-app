@@ -1,2 +1,2 @@
 #!/bin/sh
-docker-compose exec web black .
+docker-compose exec web black $(git ls-files -m -o --exclude-standard | grep \.py)

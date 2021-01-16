@@ -10,6 +10,7 @@ mamba = "*"
 expects = "*"
 black = "*"
 flake8 = "*"
+django-seed = "*"
 
 [dev-packages]
 

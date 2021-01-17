@@ -1,0 +1,56 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "Military but speech avoid leg century deal. Explain model anyone people state court standard tend.",
+        "last_login": "2008-08-01T13:02:03Z",
+        "is_superuser": false,
+        "username": "jenniferbarron",
+        "first_name": "Gary",
+        "last_name": "Thomas",
+        "email": "wcook@coleman.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-01-16T18:30:15.406Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$216000$uf8gZ1GxSfeL$ipfEWfS09o38UjTfHhgWMZxh2G8OFBt6YeocDl1+6i8=",
+        "last_login": "2021-01-17T04:30:38.238Z",
+        "is_superuser": false,
+        "username": "nwright",
+        "first_name": "Jennifer",
+        "last_name": "Collins",
+        "email": "kimwalker@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-01-16T18:30:15.406Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$216000$kimzduZS7QUX$bUG5rKqpWoKf7al7rw5W30S9snio0yIeFqXuT2ijVMM=",
+        "last_login": "2021-01-17T04:29:50.694Z",
+        "is_superuser": true,
+        "username": "root",
+        "first_name": "",
+        "last_name": "",
+        "email": "foo@bar.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-01-16T18:34:45.787Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

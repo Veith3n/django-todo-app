@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
+from .enums.urls import TasksUrls
+
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("tasks", views.create, name="create_task"),
-    path("tasks/<int:pk>/", views.update, name="update_task"),
-    path("tasks/<int:pk>/del", views.delete, name="delete_task"),
+    path("", views.index, name=TasksUrls.INDEX.value),
+    path("tasks", views.create, name=TasksUrls.CREATE.value),
+    path("tasks/<int:pk>/", views.update, name=TasksUrls.UPDATE.value),
+    path("tasks/<int:pk>/del", views.delete, name=TasksUrls.DELETE.value),
 ]

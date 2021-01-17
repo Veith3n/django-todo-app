@@ -1,0 +1,37 @@
+body{
+    background-color: #A8A8A8;
+}
+
+.header_lane {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header_lane__item {
+    width: 140px;
+    height: 52px;
+}
+.header_lane__item__items {
+   flex-grow: 2;
+    margin-right: 8px;
+}
+
+.links {
+    color: white;
+}
+
+.flex {
+    display: flex;
+}
+
+.collection {
+    justify-content: space-between;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.container{
+    max-width: 720px;
+}

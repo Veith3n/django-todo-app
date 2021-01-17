@@ -18,6 +18,7 @@ Simple django web application with basic auth to manage your Todos.
 2. Seed the app with `$ ./seed_data`
 3. Go to the `localhost:8000`
 4. Credentials for the normal user: `login: nwright, password: 123QWE!@#` and admin: `login: root, password: admin`
+3. Admin panel is accessible at `localhost:8000/admin`
 
 ### Development
 1. Install new dependencies with `$ pipenv install package_name`.

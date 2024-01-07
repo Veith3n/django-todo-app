@@ -1,5 +1,7 @@
 FROM python:3.9.1-alpine3.12
 
+ARG APP_PORT=8000
+ENV APP_PORT=$APP_PORT
 ENV ROOT_DIR /my_app
 WORKDIR $ROOT_DIR
 
@@ -17,9 +19,6 @@ RUN pip install --upgrade pip \
   && pip install -r requirements.txt \
   && rm -rf ~/.cache/pip
 
-# start script
-COPY ./entrypoint .
+# running server
+CMD sh -c "python manage.py runserver 0.0.0.0:$APP_PORT"
 
-COPY . .
-
-ENTRYPOINT ["/my_app/entrypoint"]

@@ -13,6 +13,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      web-migrations:
+        condition: service_completed_successfully
 
   postgres:
     image: postgres:13.1-alpine
@@ -30,6 +32,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
+  web-migrations:
+    build: .
+    command: python manage.py migrate
+    volumes:
+      - .:/my_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - ./.env.dev
 
 volumes:
   postgres_data:

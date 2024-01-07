@@ -3,7 +3,7 @@ FROM python:3.9.1-alpine3.12
 ENV ROOT_DIR /my_app
 WORKDIR $ROOT_DIR
 
-ENV PYTHONDONTWRITEBYTECODE 1 # prevents from writing yc files to the disc
+ENV PYTHONDONTWRITEBYTECODE 1 # prevents from writing pyc files to the disc
 ENV PYTHONUNBUFFERED 1 # prevents from buffering stdout and stderr
 
 # install psycopg2 dependencies

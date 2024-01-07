@@ -12,9 +12,10 @@ RUN apk update \
   && rm -rf /var/cache/apk/* /var/lib/apt/lists/*
 
 # install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+COPY ./requirements.txt $ROOT_DIR/
+RUN pip install --upgrade pip \
+  && pip install -r requirements.txt \
+  && rm -rf ~/.cache/pip
 
 # start script
 COPY ./entrypoint .

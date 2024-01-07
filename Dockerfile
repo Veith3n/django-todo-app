@@ -8,7 +8,8 @@ ENV PYTHONUNBUFFERED 1 # prevents from buffering stdout and stderr
 
 # install psycopg2 dependencies
 RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+  && apk add postgresql-dev gcc python3-dev musl-dev \
+  && rm -rf /var/cache/apk/* /var/lib/apt/lists/*
 
 # install dependencies
 RUN pip install --upgrade pip

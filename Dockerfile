@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1 # prevents from buffering stdout and stderr
 
 # install psycopg2 dependencies
 RUN apk update \
-  && apk add postgresql-dev gcc python3-dev musl-dev \
+  && apk add postgresql-dev gcc python3-dev musl-dev curl \
   && rm -rf /var/cache/apk/* /var/lib/apt/lists/*
 
 # install dependencies
@@ -18,6 +18,10 @@ COPY ./requirements.txt $ROOT_DIR/
 RUN pip install --upgrade pip \
   && pip install -r requirements.txt \
   && rm -rf ~/.cache/pip
+
+# define healthcheck
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD curl --fail "http://localhost:$APP_PORT/healthcheck/" || exit 1
 
 # running server
 CMD sh -c "python manage.py runserver 0.0.0.0:$APP_PORT"

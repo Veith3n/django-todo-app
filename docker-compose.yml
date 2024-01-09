@@ -3,7 +3,6 @@ version: '3.8'
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/my_app
     ports:
@@ -11,13 +10,38 @@ services:
     env_file:
       - ./.env.dev
     depends_on:
-      - db
-  db:
+      postgres:
+        condition: service_healthy
+      web-migrations:
+        condition: service_completed_successfully
+
+  postgres:
     image: postgres:13.1-alpine
+    environment:
+      - PGDATA=/data
+    env_file:
+      - .env.postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  web-migrations:
+    build: .
+    command: python manage.py migrate
+    volumes:
+      - .:/my_app
+    depends_on:
+      postgres:
+        condition: service_healthy
     env_file:
-      - ./.env.postgres
+      - ./.env.dev
 
 volumes:
   postgres_data:

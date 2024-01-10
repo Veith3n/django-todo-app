@@ -5,6 +5,7 @@ from .enums.urls import TasksUrls
 from django.contrib.auth.decorators import login_required
 from .utils import log_activity
 from .models import ActivityLog
+from django.core.exceptions import ValidationError
 
 
 @login_required
@@ -55,7 +56,12 @@ def delete(request, pk):
 
 @login_required
 def activity_log(request):
+    valid_sort_fields = ["timestamp", "action_type"]
     sort_param = request.GET.get("sort", "-timestamp")
+
+    if sort_param.strip("-") not in valid_sort_fields:
+        sort_param = "-timestamp"
+
     logs = ActivityLog.objects.filter(user=request.user).order_by(sort_param)
 
     return render(request, "activity_logs/index.html", {"logs": logs})

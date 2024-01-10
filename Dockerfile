@@ -14,9 +14,10 @@ RUN apk update \
   && rm -rf /var/cache/apk/* /var/lib/apt/lists/*
 
 # install dependencies
-COPY ./requirements.txt $ROOT_DIR/
+COPY Pipfile Pipfile.lock $ROOT_DIR/
 RUN pip install --upgrade pip \
-  && pip install -r requirements.txt \
+  && pip install pip install pipenv \
+  && pipenv install --system --deploy --ignore-pipfile \
   && rm -rf ~/.cache/pip
 
 # define healthcheck

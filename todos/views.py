@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from .enums.task_actions import TaskAction
 
 
+## Tasks
 @login_required
 def index(request):
     tasks = Task.objects.filter(user=request.user).order_by("created_at")
@@ -55,6 +56,7 @@ def delete(request, pk):
     return redirect(TasksUrls.INDEX.value)
 
 
+## Activity Logs
 @login_required
 def activity_log(request):
     valid_sort_fields = ["timestamp", "action_type"]

@@ -9,10 +9,21 @@ Tasks -
 
    </div>
    <div class="card-body">
+      <div class="d-flex justify-content-evenly mb-3">
+         <div class="mr-2">
+            <button type="button" class="btn btn-primary header_lane__item">
+               <a href="{% url "activity_log" %}" class="links">Activity Log</a>
+            </button>
+         </div>
+         <div>
+            <button type="button" class="btn btn-danger header_lane__item">
+               <a href="{% url "logout" %}" class="links">Logout</a>
+            </button>
+         </div>
+      </div>
       <div class="header_lane">
          <h4 class="bg-success text-light py-2 rounded text-center header_lane__item header_lane__item__items">My Tasks:</h4>
          <button type="button" class="btn btn-info header_lane__item m_r_8"><a href="{% url "create_task" %}" class="links">Create new</a></button>
-         <button type="button" class="btn btn-danger header_lane__item"><a href="{% url "logout" %}" class="links">Logout</a></button>
       </div>
       <div>
       </div>

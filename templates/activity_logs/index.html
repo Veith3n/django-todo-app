@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+	<h2>Tasks Activity Log</h2>
+
+	<a href="{% url "index" %}" class="btn btn-primary d-block mb-3">Go to Main Page</a>
+
+	<div class="d-flex justify-content-between align-items-center">
+		<p class="mb-3">Sort by:
+			<a href="?sort=-timestamp" class="btn btn-link">Newest First</a> |
+			<a href="?sort=timestamp" class="btn btn-link">Oldest First</a> |
+			<a href="?sort=action_type" class="btn btn-link">Action Type (Asc)</a> |
+			<a href="?sort=-action_type" class="btn btn-link">Action Type (Desc)</a>
+		</p>
+	</div>
+
+	<ul class="list-group">
+		{% for log in logs %}
+		<li class="list-group-item">
+			<span class="badge badge-secondary log-timestamp">{{ log.timestamp|date:"Y-m-d H:i:s" }}</span>
+			<strong>{{ log.action_type }}:</strong> {{ log.details }}
+		</li>
+		{% endfor %}
+	</ul>
+</div>
+
+<style>
+	.log-timestamp {
+		color: #333;
+	}
+</style>
+{% endblock %}

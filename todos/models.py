@@ -12,6 +12,7 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+
 class ActivityLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     action_type = models.CharField(max_length=10)  # create, update, delete, etc.

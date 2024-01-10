@@ -4,6 +4,7 @@ from .models import Task
 from .enums.urls import TasksUrls
 from django.contrib.auth.decorators import login_required
 from .utils import log_activity
+from .models import ActivityLog
 
 
 @login_required
@@ -50,6 +51,14 @@ def delete(request, pk):
     except:
         Task.DoesNotExist
     return redirect(TasksUrls.INDEX.value)
+
+
+@login_required
+def activity_log(request):
+    sort_param = request.GET.get("sort", "-timestamp")
+    logs = ActivityLog.objects.filter(user=request.user).order_by(sort_param)
+
+    return render(request, "activity_logs/index.html", {"logs": logs})
 
 
 def _handle_form_update(req, action, instance=None):

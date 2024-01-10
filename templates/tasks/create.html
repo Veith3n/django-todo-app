@@ -1,23 +1,25 @@
-{% extends 'base.html' %}
-{% block title %}
-Update Task -
-{% endblock title %}
-{% block content %}
+{% extends 'base.html' %} {% block title %} Update Task - {% endblock title %} {% block content %}
 <div class="card container">
-   <div class="card-header">
-      <h1 class="text-center">ToDo App</h1>
-   </div>
-   <div class="card-body">
-      <form method="post">
-         {% csrf_token %}
-         <div class="input-group mb-3 flex">
-            <div class="input-group-text flex-grow" data-toggle="tooltip" data-placement="bottom" title="Marked as completed">
-               {{task_form}}
-            </div>
-            {{task_edit_form.title}}
-            <button type="submit" class="btn btn-lg btn-info">Update</button>
-         </div>
-      </form>
-   </div>
+  <div class="card-header">
+    <h1 class="text-center">ToDo App</h1>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Task Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ task_edit_form.title.value }}" />
+      </div>
+
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="completed" name="completed" {{
+        task_edit_form.completed.value|yesno:"checked,None" }}>
+        <label class="form-check-label" for="completed">Marked as completed</label>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-info">Create</button>
+    </form>
+  </div>
 </div>
 {% endblock content %}

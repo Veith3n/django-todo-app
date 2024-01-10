@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .utils import log_activity
 from .models import ActivityLog
 from django.core.exceptions import ValidationError
+from .enums.task_actions import TaskAction
 
 
 @login_required
@@ -19,7 +20,7 @@ def index(request):
 def create(request):
     form = TaskForm()
     if request.method == "POST":
-        return _handle_form_update(req=request, action="create")
+        return _handle_form_update(req=request, action=TaskAction.CREATE.value)
 
     return render(request, "tasks/create.html", {"task_form": form})
 
@@ -31,7 +32,7 @@ def update(request, pk):
         if task.user == request.user:
             form = TaskForm(instance=task)
             if request.method == "POST":
-                return _handle_form_update(req=request, instance=task, action="update")
+                return _handle_form_update(req=request, instance=task, action=TaskAction.UPDATE.value)
 
         return render(request, "tasks/update.html", {"task_edit_form": form})
 
@@ -45,7 +46,7 @@ def delete(request, pk):
     try:
         task = Task.objects.get(id=pk)
         task.delete() if task.user == request.user else None
-        log_activity(request.user, "delete", f'Task "{task.title}" deleted.')
+        log_activity(request.user, TaskAction.UPDATE.value, f'Task "{task.title}" deleted.')
 
         return redirect(TasksUrls.INDEX.value)
 

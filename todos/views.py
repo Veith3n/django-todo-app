@@ -12,7 +12,7 @@ from .enums.task_actions import TaskAction
 ## Tasks
 @login_required
 def index(request):
-    tasks = Task.objects.filter(user=request.user).order_by("created_at")
+    tasks = Task.objects.filter(user=request.user).order_by("tags__id", "created_at")
 
     return render(request, "tasks/index.html", {"tasks": tasks})
 

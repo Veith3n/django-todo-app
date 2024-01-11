@@ -35,6 +35,10 @@ Tasks -
             {% else %}
             {{task.title}}
             {% endif %}
+             
+             {% for tag in task.tags.all %}
+             <span style="background-color: #007BFF; color: #FFFFFF; padding: 4px; margin-right: 4px; border-radius: 4px; margin-left: auto;">Tags: {{ tag.name }}</span>
+            {% endfor %}
             <div class="float-right">
                <a href="{% url "update_task" task.id %}" class="btn btn-sm btn-warning">Update</a>
                <a href="{% url "delete_task" task.id %}" class="btn btn-sm btn-danger">Delete</a>

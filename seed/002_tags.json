@@ -1,0 +1,23 @@
+[
+  {
+    "model": "todos.tag",
+    "pk": 1,
+    "fields": {
+      "name": "work"
+    }
+  },
+  {
+    "model": "todos.tag",
+    "pk": 2,
+    "fields": {
+      "name": "personal"
+    }
+  },
+  {
+    "model": "todos.tag",
+    "pk": 3,
+    "fields": {
+      "name": "holidays"
+    }
+  }
+]

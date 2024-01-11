@@ -1,12 +1,10 @@
-from django.shortcuts import render, HttpResponse, redirect
-from .forms import TaskForm
-from .models import Task
-from .enums.urls import TasksUrls
 from django.contrib.auth.decorators import login_required
-from .utils import log_activity
-from .models import ActivityLog
-from django.core.exceptions import ValidationError
+from django.shortcuts import render, redirect
 from .enums.task_actions import TaskAction
+from .enums.urls import TasksUrls
+from .forms import TaskForm
+from .models import Task, ActivityLog, Tag
+from .utils import log_activity
 
 
 ## Tasks
@@ -20,7 +18,8 @@ def index(request):
 @login_required
 def create(request):
     form = TaskForm()
-    view_render = render(request, "tasks/create.html", {"task_form": form})
+    all_tags = Tag.objects.all()
+    view_render = render(request, "tasks/create.html", {"task_form": form, "all_tags": all_tags})
 
     if request.method == "POST":
         return _handle_form_update(req=request, action=TaskAction.CREATE.value, view_render=view_render)
@@ -34,11 +33,14 @@ def update(request, pk):
         task = Task.objects.get(id=pk)
         if task.user == request.user:
             form = TaskForm(instance=task)
-            view_render = render(request, "tasks/update.html", {"task_edit_form": form})
+            all_tags = Tag.objects.all()
+            selected_tags = task.tags.values_list("id", flat=True)
+            view_render = render(request, "tasks/update.html", {"task_edit_form": form, "all_tags": all_tags, "selected_tags": selected_tags})
+
             if request.method == "POST":
                 return _handle_form_update(req=request, instance=task, action=TaskAction.UPDATE.value, view_render=view_render)
 
-        return render(request, "tasks/update.html", {"task_edit_form": form})
+        return view_render
 
     except:
         Task.DoesNotExist
@@ -79,6 +81,10 @@ def _handle_form_update(req, action, view_render, instance=None):
         task = form.save(commit=False)
         task.user = req.user
         task.save()
+        selected_tags = req.POST.getlist("tags")
+        task.tags.clear()
+        task.tags.add(*selected_tags)
+
         log_activity(req.user, action, f'Task "{task.title}" {action}.')
 
         return redirect(TasksUrls.INDEX.value)

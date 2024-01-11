@@ -1,23 +1,40 @@
-{% extends 'base.html' %}
-{% block title %}
-Update Task -
-{% endblock title %}
-{% block content %}
+{% extends 'base.html' %} {% block title %} Update Task - {% endblock title %} {% block content %}
 <div class="card container">
-   <div class="card-header">
-      <h1 class="text-center">ToDo App</h1>
-   </div>
-   <div class="card-body">
-      <form method="post">
-         {% csrf_token %}
-         <div class="input-group mb-3">
-            <div class="input-group-text" data-toggle="tooltip" data-placement="bottom" title="Marked as completed">
-               {{task_edit_form.completed}}
-            </div>
-            {{task_edit_form.title}}
-            <button type="submit" class="btn btn-lg btn-info">Update</button>
-         </div>
-      </form>
-   </div>
+  <div class="card-header">
+    <h1 class="text-center">ToDo App</h1>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Task Title</label>
+        {{ task_edit_form.title }}
+      </div>
+
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="completed" name="completed" 
+           {{ task_edit_form.completed }}
+        <label class="form-check-label" for="completed">Marked as completed</label>
+      </div>
+
+      <div class="mb-3">
+        <label for="tags" class="form-label">Tags</label>
+        <select multiple class="form-select" id="tags" name="tags">
+          {% if all_tags %}
+            {% for tag in all_tags %}
+              <option value="{{ tag.id }}" {% if tag.id in selected_tags %}selected{% endif %}>
+                {{ tag.name }}
+              </option>
+            {% endfor %}
+          {% else %}
+            <option value="" disabled>No tags available</option>
+          {% endif %}
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-info">Update</button>
+    </form>
+  </div>
 </div>
 {% endblock content %}

@@ -1,6 +1,6 @@
-# Sample django todo app
+# Sample django tasks app
 
-Simple django web application with basic auth to manage your Todos.
+Simple django web application with basic auth to manage your Tasks with simple activity log.
 
 ## Project setup
 
@@ -27,3 +27,12 @@ Simple django web application with basic auth to manage your Todos.
 ### Development
 
 1. Install new dependencies with `$ pipenv install package_name`.
+
+### Functionalities
+
+1. CRUD of users in the admin panel
+2. Logging of the users to the app
+3. CRUD of tasks per given user
+4. Activity log tab for a given user (list of actions, done with tasks, sortable)
+5. CRUD of tasks in the admin panel
+6. Adding/modifying task's tags and displaying them, sort task by tags in the index view

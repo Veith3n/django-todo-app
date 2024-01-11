@@ -20,10 +20,12 @@ def index(request):
 @login_required
 def create(request):
     form = TaskForm()
-    if request.method == "POST":
-        return _handle_form_update(req=request, action=TaskAction.CREATE.value)
+    view_render = render(request, "tasks/create.html", {"task_form": form})
 
-    return render(request, "tasks/create.html", {"task_form": form})
+    if request.method == "POST":
+        return _handle_form_update(req=request, action=TaskAction.CREATE.value, view_render=view_render)
+
+    return view_render
 
 
 @login_required
@@ -32,8 +34,9 @@ def update(request, pk):
         task = Task.objects.get(id=pk)
         if task.user == request.user:
             form = TaskForm(instance=task)
+            view_render = render(request, "tasks/update.html", {"task_edit_form": form})
             if request.method == "POST":
-                return _handle_form_update(req=request, instance=task, action=TaskAction.UPDATE.value)
+                return _handle_form_update(req=request, instance=task, action=TaskAction.UPDATE.value, view_render=view_render)
 
         return render(request, "tasks/update.html", {"task_edit_form": form})
 
@@ -70,7 +73,7 @@ def activity_log(request):
     return render(request, "activity_logs/index.html", {"logs": logs})
 
 
-def _handle_form_update(req, action, instance=None):
+def _handle_form_update(req, action, view_render, instance=None):
     form = TaskForm(req.POST) if instance is None else TaskForm(req.POST, instance=instance)
     if form.is_valid():
         task = form.save(commit=False)
@@ -79,3 +82,5 @@ def _handle_form_update(req, action, instance=None):
         log_activity(req.user, action, f'Task "{task.title}" {action}.')
 
         return redirect(TasksUrls.INDEX.value)
+    else:
+        return view_render

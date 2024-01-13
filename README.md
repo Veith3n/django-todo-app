@@ -28,6 +28,8 @@ Simple django web application with basic auth to manage your Tasks with simple a
 
 1. Install new dependencies with `$ pipenv install package_name`.
 
+## Project info
+
 ### Functionalities
 
 1. CRUD of users in the admin panel
@@ -36,3 +38,21 @@ Simple django web application with basic auth to manage your Tasks with simple a
 4. Activity log tab for a given user (list of actions, done with tasks, sortable)
 5. CRUD of tasks in the admin panel
 6. Adding/modifying task's tags and displaying them, sort task by tags in the index view
+
+### Container Dependency Structure
+
+1. **Postgres Container**
+
+   - Responsible for the PostgreSQL database.
+
+2. **Web-Migrations Container**
+
+   - Dedicated container for handling database migrations.
+   - Depends on the Postgres container to execute migrations.
+
+3. **Web Container**
+
+   - The main web application.
+   - Depends on both the Postgres container (for data storage) and the Web-Migrations container (for database migration tasks).
+   - Requires the Postgres container to be healthy before starting.
+   - Expects the Web-Migrations container to exit successfully after completing migration tasks.
